@@ -1,0 +1,14 @@
+[package]
+name = "uefi-examples"
+version = "0.1.0"
+authors = ["Wonwoo Choi"]
+edition = "2018"
+publish = false
+repository = "https://github.com/tirr-c/uefi-rust.git"
+license = "MIT OR Apache-2.0"
+
+[workspace]
+members = ["uefi-sys"]
+
+[dev-dependencies]
+uefi-sys = { path = "uefi-sys" }

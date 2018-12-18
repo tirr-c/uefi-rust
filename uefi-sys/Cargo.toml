@@ -1,0 +1,9 @@
+[package]
+name = "uefi-sys"
+version = "0.1.0"
+authors = ["Wonwoo Choi"]
+edition = "2018"
+repository = "https://github.com/tirr-c/uefi-rust.git"
+license = "MIT OR Apache-2.0"
+
+[dependencies]

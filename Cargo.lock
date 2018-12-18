@@ -1,0 +1,11 @@
+[[package]]
+name = "uefi-examples"
+version = "0.1.0"
+dependencies = [
+ "uefi-sys 0.1.0",
+]
+
+[[package]]
+name = "uefi-sys"
+version = "0.1.0"
+

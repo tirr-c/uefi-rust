@@ -10,3 +10,6 @@ UEFI libraries and examples for Rust.
 cargo install cargo-xbuild
 cargo xbuild --example minimal
 ```
+
+[xargo]: https://github.com/japaric/xargo
+[cargo-xbuild]: https://github.com/rust-osdev/cargo-xbuild

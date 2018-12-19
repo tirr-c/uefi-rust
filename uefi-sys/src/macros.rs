@@ -7,13 +7,13 @@
     (
         $(#[ $stra:meta ])* $strv:vis $name:ident,
         $($fieldv:vis $field:ident : $fieldt:ty,)* |
-        $v:vis fn $n:ident (*const self, $($argtype:ty),*) $(-> $rettype:ty)?,
+        $v:vis fn $n:ident (*const self $(, $argtype:ty)*) $(-> $rettype:ty)?,
         $($rest:tt)*
     ) => {
         define_interface!(
             $(#[$stra])* $strv $name,
             $($fieldv $field: $fieldt,)*
-            $v $n: unsafe extern "win64" fn(*const $name, $($argtype),*) $(-> $rettype)?,
+            $v $n: unsafe extern "win64" fn(*const $name $(, $argtype)*) $(-> $rettype)?,
             | $($rest)*
         );
     };

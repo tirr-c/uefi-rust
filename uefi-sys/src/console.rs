@@ -21,7 +21,22 @@ define_interface! {
         pub fn TestString(*const self, *const CHAR16) -> EFI_STATUS,
         pub fn QueryMode(*const self, usize, *mut usize, *mut usize) -> EFI_STATUS,
         pub fn SetMode(*const self, usize) -> EFI_STATUS,
+        pub fn ClearScreen(*const self) -> EFI_STATUS,
+        pub fn SetCursorPosition(*const self, usize, usize) -> EFI_STATUS,
+        pub fn EnableCursor(*const self, BOOL) -> EFI_STATUS,
+        pub Mode: *const SIMPLE_TEXT_OUTPUT_MODE,
     }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct SIMPLE_TEXT_OUTPUT_MODE {
+    pub MaxMode: i32,
+    pub Mode: i32,
+    pub Attribute: i32,
+    pub CursorColumn: i32,
+    pub CursorRow: i32,
+    pub CursorVisible: BOOL,
 }
 
 #[repr(C)]

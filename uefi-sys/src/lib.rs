@@ -8,6 +8,7 @@ mod console;
 mod runtime_services;
 mod boot_services;
 mod configuration_table;
+#[macro_use] mod macros;
 
 pub use self::types::*;
 pub use self::system_table::*;

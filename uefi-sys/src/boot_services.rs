@@ -1,3 +1,3 @@
 #[repr(C)]
-pub struct BootServices {
+pub struct EFI_BOOT_SERVICES {
 }

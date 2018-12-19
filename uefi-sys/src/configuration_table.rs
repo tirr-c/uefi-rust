@@ -1,3 +1,3 @@
 #[repr(C)]
-pub struct ConfigurationTable {
+pub struct EFI_CONFIGURATION_TABLE {
 }

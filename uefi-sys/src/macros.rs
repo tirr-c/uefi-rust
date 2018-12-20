@@ -20,6 +20,19 @@
     (
         $(#[ $stra:meta ])* $strv:vis $name:ident,
         $($fieldv:vis $field:ident : $fieldt:ty,)* |
+        $v:vis fn $n:ident ($($argtype:ty),*) $(-> $rettype:ty)?,
+        $($rest:tt)*
+    ) => {
+        define_interface!(
+            $(#[$stra])* $strv $name,
+            $($fieldv $field: $fieldt,)*
+            $v $n: unsafe extern "win64" fn($($argtype),*) $(-> $rettype)?,
+            | $($rest)*
+        );
+    };
+    (
+        $(#[ $stra:meta ])* $strv:vis $name:ident,
+        $($fieldv:vis $field:ident : $fieldt:ty,)* |
         $v:vis $n:ident : $t:ty,
         $($rest:tt)*
     ) => {

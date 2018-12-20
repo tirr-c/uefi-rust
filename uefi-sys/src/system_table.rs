@@ -5,18 +5,8 @@ use crate::boot_services::EFI_BOOT_SERVICES;
 use crate::configuration_table::EFI_CONFIGURATION_TABLE;
 
 #[repr(C)]
-#[derive(Copy, Clone)]
-pub struct EFI_SYSTEM_HEADER {
-    pub Signature: u64,
-    pub Revision: u32,
-    pub HeaderSize: u32,
-    pub Crc32: u32,
-    pub Reserved: u32,
-}
-
-#[repr(C)]
 pub struct EFI_SYSTEM_TABLE {
-    pub Hdr: EFI_SYSTEM_HEADER,
+    pub Hdr: EFI_TABLE_HEADER,
     pub FirmwareVendor: *const CHAR16,
     pub FirmwareRevision: u32,
     pub ConsoleInHandle: EFI_HANDLE,

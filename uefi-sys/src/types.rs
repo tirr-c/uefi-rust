@@ -106,3 +106,24 @@ pub struct EFI_HANDLE(*const VOID);
 #[repr(transparent)]
 #[derive(Copy, Clone)]
 pub struct EFI_EVENT(*const VOID);
+
+#[repr(transparent)]
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct EFI_TPL(pub usize);
+
+impl EFI_TPL {
+    pub const TPL_APPLICATION: EFI_TPL = EFI_TPL(4);
+    pub const TPL_CALLBACK: EFI_TPL = EFI_TPL(8);
+    pub const TPL_NOTIFY: EFI_TPL = EFI_TPL(16);
+    pub const TPL_HIGH_LEVEL: EFI_TPL = EFI_TPL(31);
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct EFI_TABLE_HEADER {
+    pub Signature: u64,
+    pub Revision: u32,
+    pub HeaderSize: u32,
+    pub Crc32: u32,
+    pub Reserved: u32,
+}

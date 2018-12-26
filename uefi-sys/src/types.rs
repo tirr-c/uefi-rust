@@ -8,6 +8,25 @@ pub enum BOOL {
     TRUE = 1,
 }
 
+impl From<bool> for BOOL {
+    fn from(val: bool) -> BOOL {
+        if val {
+            BOOL::TRUE
+        } else {
+            BOOL::FALSE
+        }
+    }
+}
+
+impl Into<bool> for BOOL {
+    fn into(self) -> bool {
+        match self {
+            BOOL::TRUE => true,
+            BOOL::FALSE => false,
+        }
+    }
+}
+
 #[repr(isize)]
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum EFI_STATUS {
@@ -95,17 +114,41 @@ pub enum EFI_STATUS {
     EFI_HTTP_ERROR = -35,
 }
 
+impl EFI_STATUS {
+    pub fn is_ok(self) -> bool {
+        self == EFI_STATUS::EFI_SUCCESS
+    }
+
+    pub fn is_warning(self) -> bool {
+        (self as isize) > 0
+    }
+
+    pub fn is_error(self) -> bool {
+        (self as isize) < 0
+    }
+}
+
+impl Into<Result<(), EFI_STATUS>> for EFI_STATUS {
+    fn into(self) -> Result<(), EFI_STATUS> {
+        if self.is_error() {
+            Err(self)
+        } else {
+            Ok(())
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct EFI_GUID(pub u32, pub u16, pub u16, pub [u8; 8]);
 
 #[repr(transparent)]
 #[derive(Copy, Clone)]
-pub struct EFI_HANDLE(*const VOID);
+pub struct EFI_HANDLE(core::ptr::NonNull<VOID>);
 
 #[repr(transparent)]
 #[derive(Copy, Clone)]
-pub struct EFI_EVENT(*const VOID);
+pub struct EFI_EVENT(core::ptr::NonNull<VOID>);
 
 #[repr(transparent)]
 #[derive(Copy, Clone, PartialEq, Eq)]

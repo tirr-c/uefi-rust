@@ -8,7 +8,8 @@ repository = "https://github.com/tirr-c/uefi-rust.git"
 license = "MIT OR Apache-2.0"
 
 [workspace]
-members = ["uefi-sys"]
+members = ["uefi", "uefi-sys"]
 
 [dev-dependencies]
+uefi = { path = "uefi" }
 uefi-sys = { path = "uefi-sys" }

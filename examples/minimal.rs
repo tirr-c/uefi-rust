@@ -16,10 +16,13 @@ fn panic(_: &PanicInfo) -> ! {
 }
 
 #[no_mangle]
-extern fn efi_main(_image_handle: EFI_HANDLE, system_table: *const EFI_SYSTEM_TABLE) -> EFI_STATUS {
-    unsafe {
-        let conout = (*system_table).ConOut;
-        ((*conout).OutputString)(conout, &[0x41u16, 10u16] as *const _);
+extern fn efi_main(image_handle: EFI_HANDLE, system_table: *const EFI_SYSTEM_TABLE) -> EFI_STATUS {
+    unsafe { uefi::init_env(image_handle, system_table); }
+    let output_status = unsafe {
+        uefi::system_table().conout().output_string_raw(&[0x41u16, 0x10, 0x0])
+    };
+    if let Err(status) = output_status {
+        return status;
     }
     EFI_STATUS::EFI_SUCCESS
 }

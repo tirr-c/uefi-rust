@@ -1,7 +1,21 @@
 [[package]]
+name = "bitflags"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "uefi"
+version = "0.1.0"
+dependencies = [
+ "bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "uefi-sys 0.1.0",
+]
+
+[[package]]
 name = "uefi-examples"
 version = "0.1.0"
 dependencies = [
+ "uefi 0.1.0",
  "uefi-sys 0.1.0",
 ]
 
@@ -9,3 +23,5 @@ dependencies = [
 name = "uefi-sys"
 version = "0.1.0"
 
+[metadata]
+"checksum bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "228047a76f468627ca71776ecdebd732a3423081fcf5125585bcd7c49886ce12"

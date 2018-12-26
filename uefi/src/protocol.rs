@@ -13,7 +13,7 @@ pub trait Protocol: Sized {
     fn from_ptr(ptr: NonNull<Self::Raw>) -> Self;
 
     fn open(
-        boot_services: &BootServices,
+        boot_services: BootServices,
         handle: Handle,
         agent_handle: Handle,
         controller_handle: Option<Handle>,
@@ -36,15 +36,15 @@ pub trait Protocol: Sized {
     }
 }
 
-pub struct OpenProtocol<'a, T: Protocol> {
-    boot_services: &'a BootServices,
+pub struct OpenProtocol<T: Protocol> {
+    boot_services: BootServices,
     handle: Handle,
     agent_handle: Handle,
     controller_handle: Option<Handle>,
     protocol: T,
 }
 
-impl<'a, T: Protocol> Drop for OpenProtocol<'a, T> {
+impl<T: Protocol> Drop for OpenProtocol<T> {
     fn drop(&mut self) {
         self.boot_services.close_protocol(
             self.handle,
@@ -55,7 +55,7 @@ impl<'a, T: Protocol> Drop for OpenProtocol<'a, T> {
     }
 }
 
-impl<'a, T: Protocol> core::ops::Deref for OpenProtocol<'a, T> {
+impl<T: Protocol> core::ops::Deref for OpenProtocol<T> {
     type Target = T;
 
     fn deref(&self) -> &T {
@@ -63,7 +63,7 @@ impl<'a, T: Protocol> core::ops::Deref for OpenProtocol<'a, T> {
     }
 }
 
-impl<'a, T: Protocol> core::ops::DerefMut for OpenProtocol<'a, T> {
+impl<T: Protocol> core::ops::DerefMut for OpenProtocol<T> {
     fn deref_mut(&mut self) -> &mut T {
         &mut self.protocol
     }

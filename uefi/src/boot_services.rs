@@ -5,6 +5,7 @@ use uefi_sys::EFI_BOOT_SERVICES;
 use crate::types::*;
 use crate::protocol::{Protocol, RawProtocol};
 
+#[repr(transparent)]
 #[derive(Copy, Clone)]
 pub struct BootServices {
     inner: NonNull<EFI_BOOT_SERVICES>,

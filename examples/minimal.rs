@@ -19,7 +19,7 @@ fn panic(_: &PanicInfo) -> ! {
 extern fn efi_main(image_handle: EFI_HANDLE, system_table: *const EFI_SYSTEM_TABLE) -> EFI_STATUS {
     unsafe { uefi::init_env(image_handle, system_table); }
     let output_status = unsafe {
-        uefi::system_table().conout().output_string_raw(&[0x41u16, 0x10, 0x0])
+        uefi::system_table().conout().output_string_raw(&[0x41u16, 0x0a, 0x0])
     };
     if let Err(status) = output_status {
         return status;

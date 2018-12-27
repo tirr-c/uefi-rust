@@ -7,3 +7,7 @@ edition = "2018"
 [dependencies]
 bitflags = "1.0.4"
 uefi-sys = { path = "../uefi-sys" }
+
+[features]
+default = ["alloc"]
+alloc = []

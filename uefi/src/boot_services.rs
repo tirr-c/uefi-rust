@@ -1,6 +1,6 @@
 use core::ptr::NonNull;
 
-use uefi_sys::EFI_BOOT_SERVICES;
+use uefi_sys::{EFI_BOOT_SERVICES, EFI_MEMORY_TYPE};
 
 use crate::types::*;
 use crate::protocol::{Protocol, RawProtocol};
@@ -17,6 +17,27 @@ impl BootServices {
         BootServices {
             inner,
         }
+    }
+
+    pub(crate) fn allocate_pool(&self, size: usize) -> EfiResult<*mut u8> {
+        let boot_ptr = self.inner.as_ptr();
+        let mut ptr: *const Void = core::ptr::null_mut();
+        let alloc_status = unsafe {
+            ((*boot_ptr).AllocatePool)(
+                EFI_MEMORY_TYPE::EfiLoaderData,
+                size,
+                &mut ptr,
+            )
+        };
+        <Status as Into<EfiResult<_>>>::into(alloc_status)?;
+        Ok(ptr as *const u8 as *mut _)
+    }
+
+    pub(crate) fn free_pool(&self, ptr: *mut u8) -> EfiResult<()> {
+        let boot_ptr = self.inner.as_ptr();
+        unsafe {
+            ((*boot_ptr).FreePool)(ptr as *const _ as *const Void)
+        }.into()
     }
 
     pub(crate) fn open_protocol<T: Protocol>(

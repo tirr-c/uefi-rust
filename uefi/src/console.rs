@@ -52,4 +52,10 @@ impl SimpleTextOutputProtocol {
         let ptr = self.inner.as_ptr();
         ((*ptr).OutputString)(ptr as *const _, string as *const _ as *const u16).into()
     }
+
+    #[cfg(feature = "alloc")]
+    pub fn output_string(&self, string: &str) -> EfiResult<()> {
+        let utf16_str = crate::utf16::str_to_utf16(string);
+        unsafe { self.output_string_raw(&utf16_str) }
+    }
 }
